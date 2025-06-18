@@ -1,7 +1,7 @@
 import { Attributes, Skills } from "../types";
 
 const username = "jdev422";
-const BASE_URL = `https://recruiting.verylongdomaintotestwith.ca/api/{${username}}/character`;
+const BASE_URL = `https://recruiting.verylongdomaintotestwith.ca/api/${username}/character`;
 
 export const fetchCharacter = async () => {
   const res = await fetch(BASE_URL);

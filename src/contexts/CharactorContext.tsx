@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode, useState } from "react";
+import { createContext, useContext, ReactNode } from "react";
 import { useMultiCharacterState } from "../hooks/useMultiCharacterState";
 import type { MultiCharacterContextType } from "../types";
 

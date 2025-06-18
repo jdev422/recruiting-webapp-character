@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { SKILL_LIST } from "../../consts";
 import { useCharacter } from "../../contexts/CharactorContext";
+import { rollSkillCheck } from "../../utils/character/rollSkillCheck";
 
 import "./styles.css";
 
@@ -14,14 +15,17 @@ export const SkillCheckCard = ({ index }: Props) => {
   const [selectedSkill, setSelectedSkill] = useState(SKILL_LIST[0].name);
   const [dc, setDC] = useState<number>(0);
   const [rollResult, setRollResult] = useState<number | null>(null);
+  const [skillValue, setSkillValue] = useState<number>(0);
+  const [total, setTotal] = useState<number>(0);
   const [success, setSuccess] = useState<boolean | null>(null);
 
   const handleRoll = () => {
-    const roll = Math.floor(Math.random() * 20) + 1;
-    const skillValue = character.skills[selectedSkill] ?? 0;
-    const total = roll + skillValue;
-    setRollResult(roll);
-    setSuccess(total >= dc);
+    const { results } = rollSkillCheck([character], selectedSkill, dc);
+    const result = results[0];
+    setRollResult(result.roll);
+    setSkillValue(result.skillValue);
+    setTotal(result.total);
+    setSuccess(result.success);
   };
 
   return (
@@ -59,12 +63,9 @@ export const SkillCheckCard = ({ index }: Props) => {
         <div className="skill-check__result">
           <p>🎲 Roll: {rollResult}</p>
           <p>
-            ✅ Result: {rollResult + (character.skills[selectedSkill] ?? 0)} ( +
-            {character.skills[selectedSkill] ?? 0} {selectedSkill})
+            ✅ Result: {total} ( +{skillValue} {selectedSkill})
           </p>
-          <p>
-            {success ? "✅ Success!" : "❌ Failure."} (Needed {dc} or more)
-          </p>
+          <p>{success ? "✅ Success!" : "❌ Failure."} (Needed {dc} or more)</p>
         </div>
       )}
     </div>

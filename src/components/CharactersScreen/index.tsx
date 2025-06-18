@@ -5,6 +5,7 @@ import { ClassList } from "../ClassList";
 import { SkillsList } from "../SkillsList";
 
 import "./styles.css";
+import { PartySkillCheckCard } from "../PartySkillCheckCard";
 
 export const CharactersScreen = () => {
   const { characters, addCharacter } = useCharacter();
@@ -12,8 +13,11 @@ export const CharactersScreen = () => {
   return (
     <div className="character-screen">
       <div>
-        <div className="add-character__button">
-          <button onClick={addCharacter}>Add Character</button>
+        <div>
+          <div className="add-character__button">
+            <button onClick={addCharacter}>Add Character</button>
+          </div>
+          <PartySkillCheckCard />
         </div>
         {characters.map((_, index) => (
           <div className="character-card" key={index}>
