@@ -1,4 +1,4 @@
-import { Attributes } from "../../contexts/CharactorContext";
+import { Attributes } from "../../types";
 
 /**
  * Determines if the character meets the minimum attribute requirements

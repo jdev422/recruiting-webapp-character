@@ -1,35 +1,33 @@
-import { useCharacter } from "../../contexts/CharactorContext";
 import { SKILL_LIST } from "../../consts";
-import { calculateModifier } from "../../utils/character/modifiers";
+import { useCharacter } from "../../contexts/CharactorContext";
 
 export const SkillsList = () => {
   const {
-    attributes,
-    skills,
+    skillPoints,
     incrementSkill,
     decrementSkill,
-    getAvailableSkillPoints,
-    getUsedSkillPoints
+    attributes,
+    getRemainingSkillPoints,
+    getSkillTotal,
   } = useCharacter();
 
   return (
     <div>
       <h2>Skills</h2>
-      <p>
-        Available Skill Points: {getUsedSkillPoints()} / {getAvailableSkillPoints()}
-      </p>
+      <p>Remaining Skill Points: {getRemainingSkillPoints()}</p>
       <ul>
-        {SKILL_LIST.map(({ name, attributeModifier }) => {
-          const modifier = calculateModifier(attributes[attributeModifier]);
-          const basePoints = skills[name];
-          const total = basePoints + modifier;
+        {SKILL_LIST.map((skill) => {
+          const modifier = attributes[skill.attributeModifier];
+          const calcModifier = Math.floor((modifier - 10) / 2);
+          const total = getSkillTotal(skill.name, calcModifier);
 
           return (
-            <li key={name} style={{ marginBottom: "10px" }}>
-              <strong>{name}</strong> - points: {basePoints}{" "}
-              <button onClick={() => incrementSkill(name)}>+</button>{" "}
-              <button onClick={() => decrementSkill(name)}>-</button>{" "}
-              | modifier ({attributeModifier}): {modifier} | total: {total}
+            <li key={skill.name}>
+              <strong>{skill.name}</strong> - Points: {skillPoints[skill.name]}{" "}
+              <button onClick={() => incrementSkill(skill.name)}>+</button>
+              <button onClick={() => decrementSkill(skill.name)}>-</button>{" "}
+              Modifier ({skill.attributeModifier}): {calcModifier} | Total:{" "}
+              {total}
             </li>
           );
         })}
