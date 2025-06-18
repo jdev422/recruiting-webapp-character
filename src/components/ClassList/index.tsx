@@ -3,6 +3,8 @@ import { useCharacter } from "../../contexts/CharactorContext";
 import { CLASS_LIST } from "../../consts";
 import { meetsRequirements } from "../../utils/character/requirements";
 
+import "./styles.css";
+
 export const ClassList = () => {
   const { attributes } = useCharacter();
   const [selectedClass, setSelectedClass] = useState<string | null>(null);
@@ -12,8 +14,8 @@ export const ClassList = () => {
   };
 
   return (
-    <div>
-      <h2>Available Classes</h2>
+    <div className="class-list__container">
+      <h3>Available Classes</h3>
       <ul>
         {Object.entries(CLASS_LIST).map(([className, requirements]) => {
           const isEligible = meetsRequirements(attributes, requirements);
@@ -30,7 +32,7 @@ export const ClassList = () => {
                 borderColor: isEligible ? "green" : "red",
               }}
             >
-              {className} {isEligible ? "✅" : "❌"}
+              <div>{className}</div> <div>{isEligible ? "✅" : "❌"}</div>
             </li>
           );
         })}
