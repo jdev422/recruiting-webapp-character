@@ -1,7 +1,7 @@
 import React from "react";
 import { useCharacter } from "../../contexts/CharactorContext";
 import { ATTRIBUTE_LIST } from "../../consts";
-import { getAbilityModifier } from "../../utils/character/modifiers";
+import { calculateModifier } from "../../utils/character/modifiers";
 
 export const AttributeList = () => {
   const { attributes, incrementAttribute, decrementAttribute } = useCharacter();
@@ -12,7 +12,7 @@ export const AttributeList = () => {
       <ul>
         {ATTRIBUTE_LIST.map((attr) => {
           const score = attributes[attr];
-          const modifier = getAbilityModifier(score);
+          const modifier = calculateModifier(score);
           const sign = modifier >= 0 ? "+" : "";
 
           return (
