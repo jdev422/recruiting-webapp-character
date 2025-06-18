@@ -3,6 +3,8 @@ import { ATTRIBUTE_LIST } from "../consts";
 import { calculateModifier } from "../utils/character/modifiers";
 import type { Attribute, Attributes, Skills } from "../types";
 
+const MAX_TOTAL_ATTRIBUTES = 70;
+
 export const useCharacterState = () => {
   const [attributes, setAttributes] = useState<Attributes>(() => {
     const initial: Partial<Attributes> = {};
@@ -27,7 +29,15 @@ export const useCharacterState = () => {
     return pointsSpent + skillAttributeModifier;
   };
 
-  const incrementAttribute = (attr: Attribute) => {
+  const totalAttributes = Object.values(attributes).reduce(
+    (sum, val) => sum + val,
+    0
+  );
+
+  const incrementAttribute = (attr: keyof Attributes) => {
+    if (totalAttributes >= MAX_TOTAL_ATTRIBUTES) {
+      return;
+    }
     setAttributes((prev) => ({ ...prev, [attr]: prev[attr] + 1 }));
   };
 
