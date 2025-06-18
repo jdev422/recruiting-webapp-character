@@ -6,7 +6,7 @@ import type { Attribute, Attributes, Skills } from "../types";
 const MAX_TOTAL_ATTRIBUTES = 70;
 
 const createEmptyAttributes = (): Attributes =>
-  Object.fromEntries(ATTRIBUTE_LIST.map(attr => [attr, 0])) as Attributes;
+  Object.fromEntries(ATTRIBUTE_LIST.map((attr) => [attr, 0])) as Attributes;
 
 const createEmptySkills = (): Skills => ({});
 
@@ -97,8 +97,7 @@ export const useMultiCharacterState = () => {
     skillAttributeModifier: number
   ) => {
     const char = characters[index];
-    const mod = calculateModifier(char.attributes[skillAttributeModifier]);
-    return (char.skills[skillName] || 0) + mod;
+    return (char.skills[skillName] ?? 0) + skillAttributeModifier;
   };
 
   return {
