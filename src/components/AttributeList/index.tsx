@@ -1,15 +1,26 @@
 import { useCharacter } from "../../contexts/CharactorContext";
 import { ATTRIBUTE_LIST } from "../../consts";
 import { calculateModifier } from "../../utils/character/modifiers";
+import { Attribute } from "../../types";
 
 import "./styles.css";
 
-export const AttributeList = () => {
-  const { attributes, incrementAttribute, decrementAttribute } = useCharacter();
+interface AttributeListProps {
+  index: number;
+}
+
+export const AttributeList = ({ index }: AttributeListProps) => {
+  const {
+    characters,
+    updateAttribute,
+  } = useCharacter();
+
+  const character = characters[index];
+  const { attributes } = character;
 
   return (
     <div className="attribute-list__container">
-      <h3>Attributes</h3>
+      <h3>{character.name} - Attributes</h3>
       <ul>
         {ATTRIBUTE_LIST.map((attr) => {
           const score = attributes[attr];
@@ -19,18 +30,17 @@ export const AttributeList = () => {
           return (
             <li key={attr} style={{ marginBottom: "8px" }}>
               <div>
-                <strong>{attr}</strong>: {score} (Modifier: {sign}
-                {modifier})
+                <strong>{attr}</strong>: {score} (Modifier: {sign}{modifier})
               </div>
               <div>
                 <button
-                  onClick={() => decrementAttribute(attr)}
+                  onClick={() => updateAttribute(index, attr as Attribute, -1)}
                   style={{ marginLeft: 10 }}
                 >
                   -
                 </button>
                 <button
-                  onClick={() => incrementAttribute(attr)}
+                  onClick={() => updateAttribute(index, attr as Attribute, 1)}
                   style={{ marginLeft: 5 }}
                 >
                   +

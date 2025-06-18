@@ -5,10 +5,14 @@ import { meetsRequirements } from "../../utils/character/requirements";
 
 import "./styles.css";
 
-export const ClassList = () => {
-  const { attributes } = useCharacter();
-  const [selectedClass, setSelectedClass] = useState<string | null>(null);
+type ClassListProps = {
+  index: number;
+};
 
+export const ClassList = ({ index }: ClassListProps) => {
+  const { characters } = useCharacter();
+  const [selectedClass, setSelectedClass] = useState<string | null>(null);
+  const character = characters[index];
   const handleClassClick = (className: string) => {
     setSelectedClass(className);
   };
@@ -18,7 +22,10 @@ export const ClassList = () => {
       <h3>Available Classes</h3>
       <ul>
         {Object.entries(CLASS_LIST).map(([className, requirements]) => {
-          const isEligible = meetsRequirements(attributes, requirements);
+          const isEligible = meetsRequirements(
+            character.attributes,
+            requirements
+          );
           return (
             <li
               key={className}

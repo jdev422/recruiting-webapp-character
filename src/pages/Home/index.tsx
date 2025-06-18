@@ -1,8 +1,8 @@
-import { CharacterCard } from "../../components/CharacterCard";
+import { CharactersScreen } from "../../components/CharactersScreen";
 import { CharacterProvider } from "../../contexts/CharactorContext";
 
 export const HomePage = () => (
   <CharacterProvider>
-    <CharacterCard />
+    <CharactersScreen />
   </CharacterProvider>
 );

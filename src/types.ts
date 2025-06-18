@@ -11,14 +11,24 @@ export type Attributes = {
   Charisma: number;
 };
 export type Class = "Barbarian" | "Wizard" | "Bard";
-export interface CharacterContextType {
+
+export interface Character {
+  name: string;
   attributes: Attributes;
   skills: Skills;
-  skillPoints: number;
-  getRemainingSkillPoints: () => number;
-  getSkillTotal: (skillName: string, skillAttributeModifier: number) => number;
-  incrementAttribute: (attr: Attribute) => void;
-  decrementAttribute: (attr: Attribute) => void;
-  incrementSkill: (skillName: string) => void;
-  decrementSkill: (skillName: string) => void;
+}
+
+export interface MultiCharacterContextType {
+  characters: Character[];
+  addCharacter: () => void;
+
+  updateAttribute: (index: number, attr: Attribute, delta: number) => void;
+  updateSkill: (index: number, skill: string, delta: number) => void;
+
+  getRemainingSkillPoints: (index: number) => number;
+  getSkillTotal: (
+    index: number,
+    skillName: string,
+    skillAttributeModifier: number
+  ) => number;
 }

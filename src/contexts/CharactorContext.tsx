@@ -1,36 +1,30 @@
-import { createContext, useContext, ReactNode } from "react";
-import type { CharacterContextType } from "../types";
-import { useCharacterState } from "../hooks/useCharacterState";
+import { createContext, useContext, ReactNode, useState } from "react";
+import { useMultiCharacterState } from "../hooks/useMultiCharacterState";
+import type { MultiCharacterContextType } from "../types";
 
-const CharacterContext = createContext<CharacterContextType | undefined>(
+const CharacterContext = createContext<MultiCharacterContextType | undefined>(
   undefined
 );
 
 export const CharacterProvider = ({ children }: { children: ReactNode }) => {
   const {
-    attributes,
-    skills,
-    skillPoints,
+    characters,
+    addCharacter,
+    updateAttribute,
+    updateSkill,
     getRemainingSkillPoints,
     getSkillTotal,
-    incrementAttribute,
-    decrementAttribute,
-    incrementSkill,
-    decrementSkill,
-  } = useCharacterState();
+  } = useMultiCharacterState();
 
   return (
     <CharacterContext.Provider
       value={{
-        attributes,
-        skills,
-        skillPoints,
+        characters,
+        addCharacter,
+        updateAttribute,
+        updateSkill,
         getRemainingSkillPoints,
         getSkillTotal,
-        incrementAttribute,
-        decrementAttribute,
-        incrementSkill,
-        decrementSkill,
       }}
     >
       {children}
@@ -38,7 +32,7 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useCharacter = (): CharacterContextType => {
+export const useCharacter = (): MultiCharacterContextType => {
   const context = useContext(CharacterContext);
   if (!context)
     throw new Error("useCharacter must be used within a CharacterProvider");
