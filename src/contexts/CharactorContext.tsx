@@ -1,13 +1,15 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { ATTRIBUTE_LIST } from "../consts";
+
 export type Attribute = (typeof ATTRIBUTE_LIST)[number];
 export type Attributes = Record<Attribute, number>;
 
-interface CharacterContextType {
+export interface CharacterContextType {
   attributes: Attributes;
-  increment: (attribute: Attribute) => void;
-  decrement: (attribute: Attribute) => void;
+  incrementAttribute: (attr: Attribute) => void;
+  decrementAttribute: (attr: Attribute) => void;
 }
+
 const CharacterContext = createContext<CharacterContextType | undefined>(
   undefined
 );
@@ -19,22 +21,24 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
     return initial as Attributes;
   });
 
-  const increment = (attribute: Attribute) => {
+  const incrementAttribute = (attribute: Attribute) => {
     setAttributes((prev) => ({
       ...prev,
       [attribute]: prev[attribute] + 1,
     }));
   };
 
-  const decrement = (attribute: Attribute) => {
+  const decrementAttribute = (attribute: Attribute) => {
     setAttributes((prev) => ({
       ...prev,
-      [attribute]: prev[attribute] - 1,
+      [attribute]: Math.max(0, prev[attribute] - 1),
     }));
   };
 
   return (
-    <CharacterContext.Provider value={{ attributes, increment, decrement }}>
+    <CharacterContext.Provider
+      value={{ attributes, incrementAttribute, decrementAttribute }}
+    >
       {children}
     </CharacterContext.Provider>
   );
