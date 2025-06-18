@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { ATTRIBUTE_LIST } from "../consts";
 export type Attribute = (typeof ATTRIBUTE_LIST)[number];
-type Attributes = Record<Attribute, number>;
+export type Attributes = Record<Attribute, number>;
 
 interface CharacterContextType {
   attributes: Attributes;
