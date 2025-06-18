@@ -9,23 +9,26 @@ export const useMultiCharacterState = () => {
   const [characters, setCharacters] = useState<
     { name: string; attributes: Attributes; skills: Skills }[]
   >([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // ✅ Fetch data once when component mounts
   useEffect(() => {
     const loadInitialCharacters = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const data = await fetchCharacter();
-
-        // Fill in empty skills for each character
         const initialized = data.map((char: any) => ({
           name: char.name,
           attributes: char.attributes,
           skills: createEmptySkills(),
         }));
-
         setCharacters(initialized);
       } catch (err) {
         console.error("Failed to load characters:", err);
+        setError("Failed to load character data.");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -115,6 +118,8 @@ export const useMultiCharacterState = () => {
 
   return {
     characters,
+    loading,
+    error,
     addCharacter,
     updateAttribute,
     updateSkill,

@@ -8,7 +8,10 @@ import "./styles.css";
 import { PartySkillCheckCard } from "../PartySkillCheckCard";
 
 export const CharactersScreen = () => {
-  const { characters, addCharacter } = useCharacter();
+  const { characters, addCharacter, loading, error } = useCharacter();
+
+  if (loading) return <p>Loading characters...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <div className="character-screen">

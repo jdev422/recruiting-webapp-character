@@ -20,6 +20,8 @@ export interface Character {
 
 export interface MultiCharacterContextType {
   characters: Character[];
+  loading: boolean;
+  error: string | null;
   addCharacter: () => void;
 
   updateAttribute: (index: number, attr: Attribute, delta: number) => void;

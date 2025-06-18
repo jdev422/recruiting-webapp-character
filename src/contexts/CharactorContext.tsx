@@ -9,6 +9,8 @@ const CharacterContext = createContext<MultiCharacterContextType | undefined>(
 export const CharacterProvider = ({ children }: { children: ReactNode }) => {
   const {
     characters,
+    loading,
+    error,
     addCharacter,
     updateAttribute,
     updateSkill,
@@ -20,6 +22,8 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
     <CharacterContext.Provider
       value={{
         characters,
+        loading,
+        error,
         addCharacter,
         updateAttribute,
         updateSkill,
